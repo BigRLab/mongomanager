@@ -1,0 +1,7 @@
+*.pyc
+*.*~
+/client.py
+/client1.py
+/client2.py
+/ipdatafs.py
+/server.py
