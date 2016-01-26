@@ -91,9 +91,19 @@ class Node():
         self.ws = websocket.WebSocketApp(address, on_message=on_message, on_error=on_error, on_close=on_close)
         self.ws.on_open = on_open
 
+    def ping(self):
+        while True:
+            time.sleep(30) # ping server every 30s
+            res = self.send_req({
+                "method": "get",
+                "url": "/operations",
+                "time": 0,
+            })
+
     def start(self):
         thread.start_new_thread(self.ws.run_forever, ())
         time.sleep(5)
+        thread.start_new_thread(self.ping, ())
         if self.isMasterNode:
             return
         self.sync_data()
