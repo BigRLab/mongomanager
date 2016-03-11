@@ -220,8 +220,9 @@ class Node():
                 # in ascending order
                 operations = operations[::-1]
                 for operation in operations:
-                    self.operations.insert_one(operation)
-                    self.exec_operation(operation)
+                    if operation["time"] > lastOperation["time"]:
+                        self.operations.insert_one(operation)
+                        self.exec_operation(operation)
         # new node, download db from manager
         else:
             if self.filesCollection.count() == 0:
